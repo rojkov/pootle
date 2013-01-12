@@ -165,7 +165,7 @@ echo "warning: Following files or directories have not been removed:
 
 %files
 %defattr(-,root,root,-)
-%doc docs/changelog.rst LICENSE CREDITS README.rst README.suse
+%doc docs/changelog.rst LICENSE CREDITS README.rst README.suse build/sphinx/html
 %dir %{_sysconfdir}/%{name}
 %config(noreplace) %{_sysconfdir}/%{name}/localsettings.conf
 %config(noreplace) %{ap_sysconfdir}/conf.d/%(basename %{S:2})
