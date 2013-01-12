@@ -1,0 +1,41 @@
+Running Pootle on openSUSE
+==========================
+This package installs Pootle as per the recommended setup, explained here:
+http://translate.sourceforge.net/wiki/pootle/optimisation
+
+Database setup
+--------------
+Start MySQL if not running: rcmysql start
+Create the Pootle user and database:
+   mysql -u root -p
+   CREATE DATABASE IF NOT EXISTS pootle CHARACTER SET = 'utf8';
+   GRANT ALL PRIVILEGES ON pootle.* TO pootle@localhost IDENTIFIED BY 'pootlepassword';
+   flush privileges;
+   quit
+
+Configuration files
+-------------------
+Enter database details in /etc/pootle/localsettings.py
+Modify /etc/apache2/conf.d/pootle.conf or
+/etc/apache2/vhost.d/pootle.conf according to preferred setup.
+Restart Apache if you made any changes to Apache configuration files:
+rcapache2 restart
+
+Starting pootle
+---------------
+Go to http://localhost/pootle/ or http://pootle.your.domain/ depending on
+your Apache setup. Note: On the first visit Pootle will setup the database and
+recalculate statistics and search indexes for the default translation projects
+(if installed). This will take a while.
+Default Pootle user and password is: admin / admin
+When logged in, go to the Admin page to verify that you have everything
+setup properly.
+
+Resources
+---------
+You can find detailed information about the different ways of installing,
+configuring and running Pootle here: 
+http://translate.sourceforge.net/wiki/pootle/installation
+and in the README file included in this package.
+
+That's it. Have a lot of fun!

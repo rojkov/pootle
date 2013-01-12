@@ -1,0 +1,38 @@
+<VirtualHost *:80>
+  ServerAdmin webmaster@@hostname@
+  ServerName @name@.@hostname@
+
+  ErrorLog /var/log/apache2/@name@-error_log
+  CustomLog /var/log/apache2/@name@-access_log combined
+
+  HostnameLookups Off
+  UseCanonicalName On
+  ServerSignature On
+
+  DocumentRoot @datadir@/@name@
+  <Directory @datadir@/@name@>
+    # Options Indexes FollowSymLinks
+    Options None
+    AllowOverride None
+
+    Order allow,deny
+    Allow from all
+  </Directory>
+    
+  # point at the wsgi loader script
+  WSGIScriptAlias / @datadir@/@name@/wsgi.py
+
+  # directly serve static files like css and images, no need to go through mod_wsgi and django
+  Alias /assets @datadir@/@name@/static
+  <Directory @datadir@/@name@/static>
+    Order deny,allow
+    Allow from all
+  </Directory>
+
+  # Allow downloading translation files directly
+  Alias /export @varlib@/@name@/po
+  <Directory @varlib@/@name@/po>
+    Order deny,allow
+    Allow from all
+  </Directory>
+</VirtualHost>
