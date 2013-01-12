@@ -111,9 +111,6 @@ Gnome terminology files included with pootle sources. For translation memory.
 ln -s %{_sysconfdir}/%{name}/localsettings.conf %{buildroot}%{python_sitelib}/%{name}/settings/90-local.conf
 %{__mv} %{buildroot}%{python_sitelib}/%{name}/static %{buildroot}%{_datadir}/%{name}
 
-# remove included python-django-djblets. TODO: check if it's needed
-%{__rm} -rf %{buildroot}%{python_sitelib}/djblets
-
 # create man pages
 ##mkdir -p %{buildroot}%{_mandir}/man1
 # PootleServer doesn't have one
