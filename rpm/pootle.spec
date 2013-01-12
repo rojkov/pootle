@@ -49,7 +49,7 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 
 BuildArch:	noarch
 BuildRequires:  apache2-devel, python-memcached, python-devel
-BuildRequires:	python-django, python-mysql, translate-toolkit, python-distribute, python-Sphinx, python-cssmin, python-django-assets, webassets, python-django-voting, gaupol
+BuildRequires:	python-django, python-mysql, translate-toolkit, python-distribute, python-Sphinx, python-cssmin, python-django-assets, webassets, python-django-voting, iso-codes
 Requires:	apache2-prefork, apache2-mod_wsgi, iso-codes, mysql, python-cssmin, python-django-assets, webassets, python-django-voting
 Requires:	python-django-south, python-lxml
 Requires:	python-mysql
