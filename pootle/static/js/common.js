@@ -131,6 +131,9 @@ $(function ($) {
     $(target).toggle();
   });
 
+  /* HACK TO ALWAYS SHOW SUMMARY */
+  $("#js-path-summary").trigger( jQuery.Event("click") );
+
   /* Cross-browser comparison function */
   var strCmp = function (a, b) {
     return a == b ? 0 : a < b ? -1 : 1;
