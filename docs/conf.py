@@ -130,16 +130,16 @@ rst_epilog = """
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'sphinx-bootstrap'
+html_theme = 'default'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-html_theme_options = {
-    'nosidebar': True,
-    'link_color': '#489b7',
-    'link_color_hover': '#489b7',
-}
+#html_theme_options = {
+#    'nosidebar': True,
+#    'link_color': '#489b7',
+#    'link_color_hover': '#489b7',
+#}
 
 # Add any paths that contain custom themes here, relative to this directory.
 html_theme_path = ['_themes']
