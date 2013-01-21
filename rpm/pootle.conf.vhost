@@ -2,8 +2,8 @@
   ServerAdmin webmaster@@hostname@
   ServerName @name@.@hostname@
 
-  ErrorLog /var/log/apache2/@name@-error_log
-  CustomLog /var/log/apache2/@name@-access_log combined
+  ErrorLog /var/log/apache2/@name@-error.log
+  CustomLog /var/log/apache2/@name@-access.log combined
 
   HostnameLookups Off
   UseCanonicalName On
@@ -18,7 +18,7 @@
     Order allow,deny
     Allow from all
   </Directory>
-    
+
   # point at the wsgi loader script
   WSGIScriptAlias / @datadir@/@name@/wsgi.py
 
