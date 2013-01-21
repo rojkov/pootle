@@ -53,6 +53,7 @@ BuildRequires:	python-django, python-mysql, translate-toolkit, python-distribute
 Requires:	apache2-prefork, apache2-mod_wsgi, iso-codes, mysql, python-cssmin, python-django-assets, webassets, python-django-voting
 Requires:	python-django-south, python-lxml
 Requires:	python-mysql
+Requires:	python-ldap
 Requires:	translate-toolkit, unzip, zip
 Suggests:	bzr, cvs, darcs, gaupol, git-core, mercurial, subversion
 %{py_requires}
