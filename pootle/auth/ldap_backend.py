@@ -41,6 +41,7 @@ class LdapBackend(object):
 
         ldo = ldap.initialize(settings.AUTH_LDAP_SERVER)
         ldo.set_option(ldap.OPT_PROTOCOL_VERSION, 3)
+        ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_ALLOW)
 
         try:
             ldo.simple_bind_s(settings.AUTH_LDAP_ANON_DN,
