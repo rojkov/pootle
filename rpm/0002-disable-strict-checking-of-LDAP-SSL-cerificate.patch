@@ -1,0 +1,24 @@
+From 97402118fb3d5d8f3bcf3beaca274900fe9a69db Mon Sep 17 00:00:00 2001
+From: Dmitry Rozhkov <dmitry.rozhkov@jollamobile.com>
+Date: Mon, 21 Jan 2013 14:13:41 +0200
+Subject: [PATCH 2/2] disable strict checking of LDAP SSL cerificate
+
+---
+ pootle/auth/ldap_backend.py |    1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/pootle/auth/ldap_backend.py b/pootle/auth/ldap_backend.py
+index ebe3a84..22ac007 100644
+--- a/pootle/auth/ldap_backend.py
++++ b/pootle/auth/ldap_backend.py
+@@ -41,6 +41,7 @@ class LdapBackend(object):
+ 
+         ldo = ldap.initialize(settings.AUTH_LDAP_SERVER)
+         ldo.set_option(ldap.OPT_PROTOCOL_VERSION, 3)
++        ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_ALLOW)
+ 
+         try:
+             ldo.simple_bind_s(settings.AUTH_LDAP_ANON_DN,
+-- 
+1.7.10.4
+

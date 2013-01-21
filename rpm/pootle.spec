@@ -45,6 +45,7 @@ Source3:	%{name}.conf.vhost
 Source4:	README.suse
 Source5:        wsgi.py
 Patch0:         0001-switch-docs-to-default-theme.patch
+Patch1:         0002-disable-strict-checking-of-LDAP-SSL-cerificate.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 
 BuildArch:	noarch
@@ -93,6 +94,7 @@ Gnome terminology files included with pootle sources. For translation memory.
 %prep
 %setup -q -n %{us_name}-%{version}
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__python} setup.py build_mo

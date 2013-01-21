@@ -1,8 +1,10 @@
-From 983037cda454e527ffde918b3cec0f1bbe00b6f4 Mon Sep 17 00:00:00 2001
+From 2c93eea60434c212770607e23821c33247597ff0 Mon Sep 17 00:00:00 2001
 From: Dmitry Rozhkov <dmitry.rozhkov@jollamobile.com>
-Date: Sat, 12 Jan 2013 16:26:13 +0200
-Subject: [PATCH] switch docs to default theme
+Date: Mon, 21 Jan 2013 13:04:46 +0200
+Subject: [PATCH 1/2] switch docs to default theme
 
+Due to lack of themes in the standard packaged Sphinx switch
+to the default theme in order to produce and to package pootle docs.
 ---
  docs/conf.py |   12 ++++++------
  1 file changed, 6 insertions(+), 6 deletions(-)
