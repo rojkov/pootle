@@ -97,6 +97,11 @@ Gnome terminology files included with pootle sources. For translation memory.
 %patch1 -p1
 
 %build
+# workaround to make webassets look for assets in correct directory
+echo "STATIC_ROOT = 'pootle/static'" > pootle/settings/91-build-local.conf
+%{__python} manage.py assets build
+%{__rm} pootle/settings/91-build-local.conf
+
 %{__python} setup.py build_mo
 %{__python} setup.py build
 %{__python} setup.py build_sphinx
@@ -135,7 +140,6 @@ ln -s %{_sysconfdir}/%{name}/localsettings.conf %{buildroot}%{python_sitelib}/%{
 %{__mkdir} -p %{varlib}/%{name}/po
 %{__chown} %{ap_usr}:%{ap_grp} %{varlib}/%{name}/po -R
 
-django-admin.py assets build --settings=pootle.settings --pythonpath=%{python_sitelib}/%{name}/apps
 
 # services
 # %{_sbindir}/a2enmod wsgi
@@ -151,16 +155,13 @@ echo "Read %{_datadir}/doc/packages/%{name}/%(basename %{S:4}) for initial setup
 %post -n pootle-terminology
 %{__chown} %{ap_usr}:%{ap_grp} %{varlib}/%{name}/po/terminology -R
 
-%preun
-django-admin.py assets clean --settings=pootle.settings --pythonpath=%{python_sitelib}/%{name}/apps
-
 %postun
-%restart_on_update memcached
+#%restart_on_update memcached
 %restart_on_update apache2
 echo "warning: Following files or directories have not been removed:
 /var/lib/pootle/po
-/var/log/apache2/pootle-access_log
-/var/log/apache2/pootle-error_log"
+/var/log/apache2/pootle-access.log
+/var/log/apache2/pootle-error.log"
 
 %clean
 %{__rm} -rf %{buildroot}
