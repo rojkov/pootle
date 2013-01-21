@@ -12,11 +12,13 @@
   DocumentRoot @datadir@/@name@
   <Directory @datadir@/@name@>
     # Options Indexes FollowSymLinks
-    Options None
+    Options FollowSymLinks
     AllowOverride None
 
     Order allow,deny
     Allow from all
+    RewriteEngine On
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
   </Directory>
 
   # point at the wsgi loader script

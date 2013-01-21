@@ -46,6 +46,7 @@ Source4:	README.suse
 Source5:        wsgi.py
 Patch0:         0001-switch-docs-to-default-theme.patch
 Patch1:         0002-disable-strict-checking-of-LDAP-SSL-cerificate.patch
+Patch2:         0003-Add-middleware-for-basic-auth.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 
 BuildArch:	noarch
@@ -95,6 +96,7 @@ Gnome terminology files included with pootle sources. For translation memory.
 %setup -q -n %{us_name}-%{version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 # workaround to make webassets look for assets in correct directory
