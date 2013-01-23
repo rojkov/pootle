@@ -63,7 +63,7 @@ Suggests:	bzr, cvs, darcs, gaupol, git-core, mercurial, subversion
 
 %description
 Pootle is used to create program translations.
-It uses the Translate Toolkit to get access to translation files and therefore 
+It uses the Translate Toolkit to get access to translation files and therefore
 can edit a variety of files (including PO and XLIFF files).
 
 Authors/Credits:
