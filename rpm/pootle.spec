@@ -43,21 +43,42 @@ Source1:	localsettings.conf
 Source2:	%{name}.conf
 Source3:	%{name}.conf.vhost
 Source4:	README.suse
-Source5:        wsgi.py
-Patch0:         0001-switch-docs-to-default-theme.patch
-Patch1:         0002-disable-strict-checking-of-LDAP-SSL-cerificate.patch
-Patch2:         0003-Add-middleware-for-basic-auth.patch
-Patch3:         0004-Always-show-summary-area.patch
+Source5:    wsgi.py
+Source6:	%{name}-ssl.conf.vhost
+Patch0:     0001-switch-docs-to-default-theme.patch
+Patch1:     0002-disable-strict-checking-of-LDAP-SSL-cerificate.patch
+Patch2:     0003-Add-middleware-for-basic-auth.patch
+Patch3:     0004-Always-show-summary-area.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 
 BuildArch:	noarch
-BuildRequires:  apache2-devel, python-memcached, python-devel
-BuildRequires:	python-django, python-mysql, translate-toolkit, python-distribute, python-Sphinx, python-cssmin, python-django-assets, webassets, python-django-voting, iso-codes
-Requires:	apache2-prefork, apache2-mod_wsgi, iso-codes, mysql, python-cssmin, python-django-assets, webassets, python-django-voting
-Requires:	python-django-south, python-lxml
+BuildRequires:  apache2-devel
+BuildRequires:  python-memcached
+BuildRequires:  python-devel
+BuildRequires:	python-django
+BuildRequires:	python-mysql
+BuildRequires:	translate-toolkit
+BuildRequires:	python-distribute
+BuildRequires:	python-Sphinx
+BuildRequires:	python-cssmin
+BuildRequires:	python-django-assets
+BuildRequires:	webassets
+BuildRequires:	python-django-voting
+BuildRequires:	iso-codes
+Requires:	apache2-prefork
+Requires:	apache2-mod_wsgi
+Requires:	iso-codes
+Requires:	mysql
+Requires:	python-cssmin
+Requires:	python-django-assets
+Requires:	webassets
+Requires:	python-django-voting
+Requires:	python-django-south
+Requires:	python-lxml
 Requires:	python-mysql
 Requires:	python-ldap
-Requires:	translate-toolkit, unzip, zip
+Requires:	translate-toolkit
+Requires:	unzip, zip
 Suggests:	bzr, cvs, darcs, gaupol, git-core, mercurial, subversion
 %{py_requires}
 
@@ -76,7 +97,7 @@ Group: Development/Tools/Other
 Summary: Pootle tutorial project
 Requires:	pootle
 %description -n pootle-tutorial
-Tutorial project where users can play with Pootle and learn more about 
+Tutorial project where users can play with Pootle and learn more about
 translation and localisation.
 
 %package -n pootle-terminology
@@ -85,13 +106,6 @@ Summary: Pootle terminology files
 Requires:	pootle
 %description -n pootle-terminology
 Gnome terminology files included with pootle sources. For translation memory.
-
-#%package -n pootle-po-files
-#Group: Development/Tools/Other
-#Summary: Pootle po files
-#Requires:	pootle
-#%description -n pootle-po-files
-#Gettext po files for translating Pootle itself.
 
 %prep
 %setup -q -n %{us_name}-%{version}
@@ -113,7 +127,8 @@ echo "STATIC_ROOT = 'pootle/static'" > pootle/settings/91-build-local.conf
 %install
 %{__python} setup.py install --skip-build --prefix=%{_prefix} --root=%{buildroot}
 %{__install} -D -m0644 %{S:2} %{buildroot}%{ap_sysconfdir}/conf.d/%(basename %{S:2})
-%{__install} -D -m0644 %{S:3} %{buildroot}%{ap_sysconfdir}/vhosts.d/pootle.conf
+%{__install} -D -m0644 %{S:3} %{buildroot}%{ap_sysconfdir}/vhosts.d/%{name}.conf
+%{__install} -D -m0644 %{S:6} %{buildroot}%{ap_sysconfdir}/vhosts.d/%{name}-ssl.conf
 %{__cp} -p %{S:4} .
 %{__install} -d %{buildroot}%{varlib}/%{name}
 %{__mv} %{buildroot}%{python_sitelib}/%{name}/po %{buildroot}%{varlib}/%{name}/
@@ -123,12 +138,6 @@ echo "STATIC_ROOT = 'pootle/static'" > pootle/settings/91-build-local.conf
 ln -s %{_sysconfdir}/%{name}/localsettings.conf %{buildroot}%{python_sitelib}/%{name}/settings/90-local.conf
 %{__mv} %{buildroot}%{python_sitelib}/%{name}/static %{buildroot}%{_datadir}/%{name}
 
-# create man pages
-##mkdir -p %{buildroot}%{_mandir}/man1
-# PootleServer doesn't have one
-##LC_ALL=C PYTHONPATH=. import_pootle_prefs --manpage > %{buildroot}%{_mandir}/man1/import_pootle_prefs.1
-##LC_ALL=C PYTHONPATH=. updatetm --manpage > %{buildroot}%{_mandir}/man1/updatetm.1
-
 %post
 # insert paths in config files
 %{__sed} -i -e "s,@name@,%{name},g" -e "s,@datadir@,%{_datadir},g" \
@@ -137,8 +146,11 @@ ln -s %{_sysconfdir}/%{name}/localsettings.conf %{buildroot}%{python_sitelib}/%{
 %{__sed} -i -e "s,@name@,%{name},g" -e "s,@datadir@,%{_datadir},g" \
   -e "s,@varlib@,%{varlib},g" -e "s,@hostname@,$(%{__cat} /etc/HOSTNAME),g" \
   %{ap_sysconfdir}/vhosts.d/pootle.conf
-##%{__sed} -i -e "s,@name@,%{name},g" \
-##  -e "s,@hostname@,$(%{__cat} /etc/HOSTNAME),g" %{_sysconfdir}/%{name}/localsettings.conf
+%{__sed} -i -e "s,@name@,%{name},g" -e "s,@datadir@,%{_datadir},g" \
+  -e "s,@varlib@,%{varlib},g" -e "s,@hostname@,$(%{__cat} /etc/HOSTNAME),g" \
+  %{ap_sysconfdir}/vhosts.d/pootle-ssl.conf
+%{__sed} -i -e "s,@name@,%{name},g" -e "s,@datadir@,%{_datadir},g" -e "s,@varlib@,%{varlib},g" \
+  -e "s,@hostname@,$(%{__cat} /etc/HOSTNAME),g" %{_sysconfdir}/%{name}/localsettings.conf
 
 # Apache needs write permission to /var/lib/pootle/po
 %{__mkdir} -p %{varlib}/%{name}/po
@@ -177,19 +189,15 @@ echo "warning: Following files or directories have not been removed:
 %dir %{_sysconfdir}/%{name}
 %config(noreplace) %{_sysconfdir}/%{name}/localsettings.conf
 %config(noreplace) %{ap_sysconfdir}/conf.d/%(basename %{S:2})
-%config %{ap_sysconfdir}/vhosts.d/pootle.conf
+%config %{ap_sysconfdir}/vhosts.d/%{name}.conf
+%config %{ap_sysconfdir}/vhosts.d/%{name}-ssl.conf
 %{_bindir}/*
 %{python_sitelib}/*
 %dir %{_datadir}/%{name}
 %dir %{varlib}/%{name}
 %dir %{varlib}/%{name}/po
 %{_datadir}/%{name}/wsgi.py
-##%{_datadir}/%{name}/html
-##%{_datadir}/%{name}/templates
 %{_datadir}/%{name}/static
-#TODO: remove vv
-#%{_datadir}/%{name}/mo
-##%{_mandir}/man1/*
 
 %files -n pootle-tutorial
 %defattr(-,root,root,-)
@@ -198,12 +206,5 @@ echo "warning: Following files or directories have not been removed:
 %files -n pootle-terminology
 %defattr(-,root,root,-)
 %{varlib}/%{name}/po/terminology
-
-#%files -n pootle-po-files
-#%defattr(-,root,root,-)
-#%dir %{varlib}/%{name}
-#%dir %{varlib}/%{name}/po
-#%{varlib}/%{name}/po/%{name}
-
 
 %changelog
