@@ -52,3 +52,6 @@ urlpatterns = patterns(
     (r'', include('pootle_translationproject.urls')),
     (r'', include('pootle_language.urls')),
 )
+
+if 'gitapi' in settings.INSTALLED_APPS:
+    urlpatterns.insert(0, patterns('', (r'^gitapi/', include('gitapi.urls')))[0])
