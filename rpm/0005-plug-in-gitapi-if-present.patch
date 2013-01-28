@@ -1,0 +1,23 @@
+From 32c7ede9855ca61a9f9d919076c9214b809eb3c3 Mon Sep 17 00:00:00 2001
+From: Dmitry Rozhkov <dmitry.rozhkov@jollamobile.com>
+Date: Mon, 28 Jan 2013 13:15:17 +0200
+Subject: [PATCH 5/5] plug in gitapi if present
+
+---
+ pootle/urls.py |    3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/pootle/urls.py b/pootle/urls.py
+index cff10ec..44ca7da 100644
+--- a/pootle/urls.py
++++ b/pootle/urls.py
+@@ -52,3 +52,6 @@ urlpatterns = patterns(
+     (r'', include('pootle_translationproject.urls')),
+     (r'', include('pootle_language.urls')),
+ )
++
++if 'gitapi' in settings.INSTALLED_APPS:
++    urlpatterns.insert(0, patterns('', (r'^gitapi/', include('gitapi.urls')))[0])
+-- 
+1.7.9.5
+

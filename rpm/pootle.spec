@@ -49,6 +49,7 @@ Patch0:     0001-switch-docs-to-default-theme.patch
 Patch1:     0002-disable-strict-checking-of-LDAP-SSL-cerificate.patch
 Patch2:     0003-Add-middleware-for-basic-auth.patch
 Patch3:     0004-Always-show-summary-area.patch
+Patch4:     0005-plug-in-gitapi-if-present.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 
 BuildArch:	noarch
@@ -79,6 +80,7 @@ Requires:	python-mysql
 Requires:	python-ldap
 Requires:	translate-toolkit
 Requires:	unzip, zip
+Requires:   python-django-jollaaddons
 Suggests:	bzr, cvs, darcs, gaupol, git-core, mercurial, subversion
 %{py_requires}
 
@@ -113,6 +115,7 @@ Gnome terminology files included with pootle sources. For translation memory.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 # workaround to make webassets look for assets in correct directory
