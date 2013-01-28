@@ -37,4 +37,13 @@
     Order deny,allow
     Allow from all
   </Directory>
+
+  # Deny access to Git API
+  <Location /gitapi>
+    Order Deny,Allow
+    Deny from all
+    Allow from 172.16.17.0/255.255.255.0
+    Allow from 172.16.18.0/255.255.255.0
+  </Location>
+
 </VirtualHost>
