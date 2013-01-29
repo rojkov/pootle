@@ -55,3 +55,5 @@ urlpatterns = patterns(
 
 if 'gitapi' in settings.INSTALLED_APPS:
     urlpatterns.insert(0, patterns('', (r'^gitapi/', include('gitapi.urls')))[0])
+if 'jollaapi' in settings.INSTALLED_APPS:
+    urlpatterns.insert(0, patterns('', (r'^jollaapi/', include('jollaapi.urls')))[0])
