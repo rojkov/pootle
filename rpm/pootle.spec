@@ -50,6 +50,7 @@ Patch1:     0002-disable-strict-checking-of-LDAP-SSL-cerificate.patch
 Patch2:     0003-Add-middleware-for-basic-auth.patch
 Patch3:     0004-Always-show-summary-area.patch
 Patch4:     0005-plug-in-gitapi-if-present.patch
+Patch5:     0006-plug-in-jollaapi-if-present.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 
 BuildArch:	noarch
@@ -116,6 +117,7 @@ Gnome terminology files included with pootle sources. For translation memory.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 # workaround to make webassets look for assets in correct directory

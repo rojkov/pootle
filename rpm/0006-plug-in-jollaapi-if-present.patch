@@ -1,0 +1,22 @@
+From 289c2015c7912a21dd7f212cff0a72b363bf9f28 Mon Sep 17 00:00:00 2001
+From: Dmitry Rozhkov <dmitry.rozhkov@jollamobile.com>
+Date: Tue, 29 Jan 2013 22:45:28 +0200
+Subject: [PATCH 6/6] plug in jollaapi if present
+
+---
+ pootle/urls.py |    2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/pootle/urls.py b/pootle/urls.py
+index 44ca7da..91feba2 100644
+--- a/pootle/urls.py
++++ b/pootle/urls.py
+@@ -55,3 +55,5 @@ urlpatterns = patterns(
+ 
+ if 'gitapi' in settings.INSTALLED_APPS:
+     urlpatterns.insert(0, patterns('', (r'^gitapi/', include('gitapi.urls')))[0])
++if 'jollaapi' in settings.INSTALLED_APPS:
++    urlpatterns.insert(0, patterns('', (r'^jollaapi/', include('jollaapi.urls')))[0])
+-- 
+1.7.9.5
+
